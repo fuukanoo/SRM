@@ -85,7 +85,16 @@ function App() {
     const step = steps[currentStep];
     switch (step.type) {
       case 'profile':
-        return <ProfileScreen profileData={profileData} setProfileData={setProfileData} />;
+        return (
+          <ProfileScreen 
+            profileData={profileData} 
+            setProfileData={setProfileData}
+            steps={stepLabels}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            onAddStep={handleAddStep}
+          />
+        );
       case 'entryAdjustment':
         return <EntryAdjustmentScreen profileData={profileData} setProfileData={setProfileData} />;
       case 'casual':
@@ -134,10 +143,15 @@ function App() {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
-      const scaleX = windowWidth / fixedWidth;
-      const scaleY = windowHeight / fixedHeight;
+      let scaleX = windowWidth / fixedWidth;
+      let scaleY = windowHeight / fixedHeight;
 
-      const newScale = Math.min(scaleX, scaleY);
+      let newScale = Math.min(scaleX, scaleY);
+
+      // スケールの最小値と最大値を設定
+      newScale = Math.max(newScale, 0.5); // 最小50%
+      newScale = Math.min(newScale, 1.5); // 最大150%
+
       setScale(newScale);
     };
 
@@ -160,14 +174,6 @@ function App() {
         }}
       >
         <div className="container">
-          {/* ステップナビゲーション */}
-          <StepNavigator
-            steps={stepLabels}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            onAddStep={handleAddStep}
-          />
-          {/* 現在のステップのコンテンツ */}
           {renderStep()}
         </div>
       </div>

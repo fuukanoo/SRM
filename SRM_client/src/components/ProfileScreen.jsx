@@ -1,6 +1,10 @@
-import React, { useRef } from "react";
+// ProfileScreen.jsx
 
-function ProfileScreen({ profileData, setProfileData }) {
+import React, { useRef } from "react";
+import "./ProfileScreen.css";
+import StepNavigator from "./StepNavigator"; // ステップナビゲーションをインポート
+
+function ProfileScreen({ profileData, setProfileData, steps, currentStep, setCurrentStep, onAddStep }) {
   const fileInputRef = useRef(null); // ファイル入力フィールドの参照を作成
 
   const handleInputChange = (e) => {
@@ -18,106 +22,124 @@ function ProfileScreen({ profileData, setProfileData }) {
     : null;
 
   return (
-    <div className="container">
-      <h2>エントリー</h2>
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-        {/* 写真アップロードとプレビュー */}
-        <div
-          style={{
-            width: "120px", // 横幅
-            height: "160px", // 縦幅 (4:3比率)
-            backgroundColor: "#e0e0e0",
-            borderRadius: "5px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundImage: photoPreviewUrl ? `url(${photoPreviewUrl})` : "none",
-            backgroundSize: "cover", // 枠いっぱいに画像を表示
-            backgroundPosition: "center",
-            border: "1px solid #ccc",
-            marginRight: "20px",
-            cursor: "pointer", // マウスカーソルを変更
-          }}
-          onClick={() => fileInputRef.current.click()} // 四角形をクリックするとファイル選択
-        >
-          {!photoPreviewUrl && <p>写真未挿入</p>}
-        </div>
-        {/* 隠されたファイル入力フィールド */}
-        <input
-          type="file"
-          name="photo"
-          accept="image/*"
-          ref={fileInputRef} // 隠されたファイル入力を参照
-          style={{ display: "none" }}
-          onChange={handleFileUpload}
-        />
-      </div>
+    <div className="profile-container">
+      {/* ヘッダーセクション */}
+      <div className="header-section">
+        <div className="entry-label">エントリー</div>
 
-      {/* フリガナと名前入力 */}
-      <div style={{ marginBottom: "20px" }}>
-        <div>
-          <label>フリガナ:</label>
-          <input
-            type="text"
-            name="furigana"
-            value={profileData.furigana || ""}
-            onChange={handleInputChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <label>名前:</label>
-          <input
-            type="text"
-            name="name"
-            value={profileData.name || ""}
-            onChange={handleInputChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-      </div>
-
-      {/* 最終学歴と職務経歴 */}
-      <div style={{ marginBottom: "20px" }}>
-        <div>
-          <label>最終学歴:</label>
-          <input
-            type="text"
-            name="education"
-            value={profileData.education || ""}
-            onChange={handleInputChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <label>職務経歴:</label>
-          <input
-            type="text"
-            name="career"
-            value={profileData.career || ""}
-            onChange={handleInputChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-      </div>
-
-      {/* 履歴書と職務経歴書のアップロード */}
-      <div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>履歴書:</label>
+        {/* 写真アップロードセクション */}
+        <div className="photo-upload">
+          <div
+            className="photo-preview"
+            style={{
+              backgroundImage: photoPreviewUrl ? `url(${photoPreviewUrl})` : "none",
+            }}
+            onClick={() => fileInputRef.current.click()} // 四角形をクリックするとファイル選択
+          >
+            {!photoPreviewUrl && <p>写真未挿入</p>}
+          </div>
+          {/* 隠されたファイル入力フィールド */}
           <input
             type="file"
-            name="resume"
+            name="photo"
+            accept="image/*"
+            ref={fileInputRef} // 隠されたファイル入力を参照
+            style={{ display: "none" }}
             onChange={handleFileUpload}
           />
         </div>
-        <div>
-          <label>職務経歴書:</label>
-          <input
-            type="file"
-            name="careerSheet"
-            onChange={handleFileUpload}
+
+        {/* ステップナビゲーション */}
+        <div className="step-navigator-container">
+          <StepNavigator 
+            steps={steps} 
+            currentStep={currentStep} 
+            setCurrentStep={setCurrentStep} 
+            onAddStep={onAddStep} 
           />
+        </div>
+      </div>
+
+      {/* フォームセクション */}
+      <div className="form-section">
+        {/* 左列 */}
+        <div className="form-column">
+          {/* フリガナ */}
+          <div className="form-group">
+            <label htmlFor="furigana">フリガナ:</label>
+            <input
+              type="text"
+              id="furigana"
+              name="furigana"
+              value={profileData.furigana || ""}
+              onChange={handleInputChange}
+              placeholder="未入力"
+            />
+          </div>
+
+          {/* 名前 */}
+          <div className="form-group">
+            <label htmlFor="name">名前:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={profileData.name || ""}
+              onChange={handleInputChange}
+              placeholder="未入力"
+            />
+          </div>
+
+          {/* 最終学歴 */}
+          <div className="form-group">
+            <label htmlFor="education">最終学歴:</label>
+            <input
+              type="text"
+              id="education"
+              name="education"
+              value={profileData.education || ""}
+              onChange={handleInputChange}
+              placeholder="未入力"
+            />
+          </div>
+        </div>
+
+        {/* 右列 */}
+        <div className="form-column">
+          {/* 職務経歴 */}
+          <div className="form-group">
+            <label htmlFor="career">職務経歴:</label>
+            <input
+              type="text"
+              id="career"
+              name="career"
+              value={profileData.career || ""}
+              onChange={handleInputChange}
+              placeholder="未入力"
+            />
+          </div>
+
+          {/* 履歴書のアップロード */}
+          <div className="form-group">
+            <label htmlFor="resume">履歴書:</label>
+            <input
+              type="file"
+              id="resume"
+              name="resume"
+              onChange={handleFileUpload}
+            />
+          </div>
+
+          {/* 職務経歴書のアップロード */}
+          <div className="form-group">
+            <label htmlFor="careerSheet">職務経歴書:</label>
+            <input
+              type="file"
+              id="careerSheet"
+              name="careerSheet"
+              onChange={handleFileUpload}
+            />
+          </div>
         </div>
       </div>
     </div>
