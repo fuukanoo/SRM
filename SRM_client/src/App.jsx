@@ -9,6 +9,7 @@ import FirstInterviewScreen from "./components/FirstInterviewScreen";
 import SecondInterviewScreen from "./components/SecondInterviewScreen";
 import OtherScreens from "./components/OtherScreens";
 import FinalInterviewScreen from "./components/FinalInterviewScreen";
+import "./App.css"; // グローバルなスタイルを適用
 
 function App() {
   const [profileData, setProfileData] = useState({
@@ -76,7 +77,8 @@ function App() {
   ]);
 
   const handleAddStep = () => {
-    const newStepName = `フォロー面談 ${steps.length + 1}`;
+    const newStepNumber = steps.filter(step => step.type === 'followUp').length + 1;
+    const newStepName = `フォロー面談 ${newStepNumber}`;
     setStepLabels((prev) => [...prev, newStepName]);
     setSteps((prev) => [...prev, { id: steps.length + 1, type: 'followUp' }]);
   };
@@ -89,10 +91,6 @@ function App() {
           <ProfileScreen 
             profileData={profileData} 
             setProfileData={setProfileData}
-            steps={stepLabels}
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-            onAddStep={handleAddStep}
           />
         );
       case 'entryAdjustment':
@@ -126,8 +124,9 @@ function App() {
             setInterviewData={setInterviewData}
           />
         );
-      case 'other':
       case 'followUp':
+        return <OtherScreens profileData={profileData} casualData={casualData} />;
+      case 'other':
         return <OtherScreens profileData={profileData} casualData={casualData} />;
       default:
         return <div>ステップが見つかりません。</div>;
@@ -174,7 +173,132 @@ function App() {
         }}
       >
         <div className="container">
-          {renderStep()}
+          {/* ヘッダーセクション */}
+          <div className="header-section">
+            <h1>エントリー</h1>
+          </div>
+
+          {/* トップセクション: 写真挿入とステップナビゲーション */}
+          <div className="top-section">
+            <div className="photo-upload-container">
+              <ProfileScreen 
+                profileData={profileData} 
+                setProfileData={setProfileData}
+              />
+            </div>
+            <div className="step-navigator-container">
+              <StepNavigator 
+                steps={stepLabels} 
+                currentStep={currentStep} 
+                setCurrentStep={setCurrentStep} 
+                onAddStep={handleAddStep} 
+              />
+              <div className="selection-results">
+                {/* ここに選考結果を表示するコンポーネントを追加予定 */}
+                {/* 例: <SelectionResults currentStep={currentStep} /> */}
+              </div>
+            </div>
+          </div>
+
+          {/* コンテンツセクション: フォームフィールドと画面内容 */}
+          <div className="content-section">
+            <div className="form-fields">
+              {/* フリガナ */}
+              <div className="form-group">
+                <label htmlFor="furigana">フリガナ:</label>
+                <input
+                  type="text"
+                  id="furigana"
+                  name="furigana"
+                  value={profileData.furigana || ""}
+                  onChange={(e) => {
+                    const { name, value } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: value }));
+                  }}
+                  placeholder="未入力"
+                />
+              </div>
+
+              {/* 名前 */}
+              <div className="form-group">
+                <label htmlFor="name">名前:</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={profileData.name || ""}
+                  onChange={(e) => {
+                    const { name, value } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: value }));
+                  }}
+                  placeholder="未入力"
+                />
+              </div>
+
+              {/* 最終学歴 */}
+              <div className="form-group">
+                <label htmlFor="education">最終学歴:</label>
+                <input
+                  type="text"
+                  id="education"
+                  name="education"
+                  value={profileData.education || ""}
+                  onChange={(e) => {
+                    const { name, value } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: value }));
+                  }}
+                  placeholder="未入力"
+                />
+              </div>
+
+              {/* 職務経歴 */}
+              <div className="form-group">
+                <label htmlFor="career">職務経歴:</label>
+                <input
+                  type="text"
+                  id="career"
+                  name="career"
+                  value={profileData.career || ""}
+                  onChange={(e) => {
+                    const { name, value } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: value }));
+                  }}
+                  placeholder="未入力"
+                />
+              </div>
+
+              {/* 履歴書のアップロード */}
+              <div className="form-group">
+                <label htmlFor="resume">履歴書:</label>
+                <input
+                  type="file"
+                  id="resume"
+                  name="resume"
+                  onChange={(e) => {
+                    const { name, files } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: files[0] }));
+                  }}
+                />
+              </div>
+
+              {/* 職務経歴書のアップロード */}
+              <div className="form-group">
+                <label htmlFor="careerSheet">職務経歴書:</label>
+                <input
+                  type="file"
+                  id="careerSheet"
+                  name="careerSheet"
+                  onChange={(e) => {
+                    const { name, files } = e.target;
+                    setProfileData((prev) => ({ ...prev, [name]: files[0] }));
+                  }}
+                />
+              </div>
+            </div>
+            <div className="screen-content">
+              {renderStep()}
+            </div>
+          </div>
         </div>
       </div>
     </div>

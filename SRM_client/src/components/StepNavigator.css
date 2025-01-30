@@ -3,20 +3,24 @@
 .step-navigator {
   display: flex;
   flex-direction: row; /* 横方向にボタンを配置 */
+  flex-wrap: nowrap;   /* ボタンが折り返されないようにする */
   gap: 10px;
-  overflow-x: auto; /* 横スクロールを有効化 */
+  overflow-x: auto;    /* 横スクロールを有効化 */
   padding: 5px 0;
   width: 100%;
+  box-sizing: border-box; /* パディングやボーダーを含めたサイズ計算 */
 }
 
 .step-button {
+  flex: 0 0 auto;      /* ボタンのサイズを固定 */
   padding: 10px 15px;
   border: 1px solid #ddd;
   background-color: #fff;
   border-radius: 5px;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: nowrap; /* テキストの折り返しを防止 */
   transition: background-color 0.2s;
+  font-size: 16px;
 }
 
 .step-button.active {
@@ -30,13 +34,18 @@
 }
 
 .add-button {
+  flex: 0 0 auto;      /* ボタンのサイズを固定 */
   padding: 10px 15px;
   background-color: #28a745;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: nowrap; /* テキストの折り返しを防止 */
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-button:hover {

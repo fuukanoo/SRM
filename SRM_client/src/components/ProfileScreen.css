@@ -1,191 +1,53 @@
-/* ProfileScreen.css */
+/* StepNavigator.css */
 
-/* コンテナ全体のスタイル */
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    overflow: hidden; /* スクロールバーを非表示 */
-  }
-  
-  /* ヘッダーセクション（エントリー、写真挿入、ステップナビゲーション） */
-  .header-section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-    gap: 20px;
-  }
-  
-  /* エントリーラベル */
-  .entry-label {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* 写真アップロードセクション */
-  .photo-upload {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .photo-preview {
-    width: 120px;
-    height: 160px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    background-position: center;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .photo-preview p {
-    color: #555;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  /* ステップナビゲーションのスタイル */
-  .step-navigator-container {
-    flex-grow: 1; /* 残りのスペースを占有 */
-  }
-  
-  .step-navigator {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    overflow-x: auto; /* 横スクロールを有効化 */
-    padding: 5px 0;
-  }
-  
-  .step-button {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.2s;
-  }
-  
-  .step-button.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .step-button:hover:not(.active) {
-    background-color: #f1f1f1;
-  }
-  
-  .add-button {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  
-  .add-button:hover {
-    background-color: #218838;
-  }
-  
-  /* フォームセクション */
-  .form-section {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  /* 各フォームのカラム */
-  .form-column {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 300px; /* 最小幅を設定 */
-  }
-  
-  /* 各入力項目のスタイル */
-  .form-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    width: 150px; /* ラベルの幅を固定 */
-    margin-right: 10px;
-    font-weight: bold;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="number"],
-  .form-group input[type="file"] {
-    width: 200px; /* 入力フィールドの固定幅 */
-    height: 40px; /* 高さを固定 */
-    padding: 5px 10px;
-    border: 1px solid #ccc; /* 通常のボーダー */
-    border-radius: 5px;
-    background-color: #fff; /* 背景色を白に */
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  
-  .form-group input[type="file"] {
-    width: auto; /* ファイル入力は自動幅 */
-  }
-  
-  /* レスポンシブ対応（画面が固定サイズより狭くなった場合に折り返す） */
-  @media (max-width: 1280px) {
-    .header-section {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .step-navigator-container {
-      width: 100%;
-    }
-  
-    .step-navigator {
-      justify-content: flex-start;
-    }
-  
-    .form-section {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .form-group {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .form-group label {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 5px;
-    }
-  
-    .form-group input[type="text"],
-    .form-group input[type="number"],
-    .form-group input[type="file"] {
-      width: 100%;
-    }
-  }
-  
+.step-navigator {
+  display: flex;
+  flex-direction: row; /* 横方向にボタンを配置 */
+  flex-wrap: nowrap;   /* ボタンが折り返されないようにする */
+  gap: 10px;
+  overflow-x: auto;    /* 横スクロールを有効化 */
+  padding: 5px 0;
+  width: 100%;
+  box-sizing: border-box; /* パディングやボーダーを含めたサイズ計算 */
+}
+
+.step-button {
+  flex: 0 0 auto;      /* ボタンのサイズを固定 */
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap; /* テキストの折り返しを防止 */
+  transition: background-color 0.2s;
+  font-size: 16px;
+}
+
+.step-button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.step-button:hover:not(.active) {
+  background-color: #f1f1f1;
+}
+
+.add-button {
+  flex: 0 0 auto;      /* ボタンのサイズを固定 */
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap; /* テキストの折り返しを防止 */
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}

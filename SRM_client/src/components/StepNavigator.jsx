@@ -10,7 +10,6 @@ function StepNavigator({ steps, currentStep, setCurrentStep, onAddStep }) {
 
   return (
     <div className="step-navigator">
-      {/* ステップボタン一覧 */}
       {steps.map((step, index) => (
         <button
           key={index}
